@@ -1,0 +1,10 @@
+<h2>My Team</h2>
+
+<mat-list *ngFor="let pokemon of pokemonTeam">
+    <mat-list-item><img src="../../assets/img/sprites/{{pokemon.id}}.png"/>{{pokemon.name}}<button mat-button color="warn" (click)="deletePokemon(pokemon.id)">Supprimer</button></mat-list-item>
+    <mat-divider></mat-divider>
+</mat-list>
+
+<button class="menuButton" routerLink="/pokedex" mat-raised-button color="primary">Pokédex</button>
+
+

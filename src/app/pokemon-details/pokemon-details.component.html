@@ -1,0 +1,21 @@
+<h2>Détails</h2>
+
+<audio src="../../assets/audio/{{pokemonId}}.mp3" #cry></audio>
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{pokemon.name}}</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+      <button mat-button (click)="cry.play()"><mat-icon>home</mat-icon>play</button>
+    </mat-card-header>
+    <img mat-card-image src="../../assets/img/official-artwork/{{pokemonId}}.png" alt="{{pokemon.name}}">
+    <mat-card-content>
+        <div class="type">
+          <mat-chip-list>
+              <mat-chip *ngFor="let type of pokemon.types">{{type}}</mat-chip>
+          </mat-chip-list>
+          </div>
+      <p>{{pokemon.description}}</p>
+    </mat-card-content>
+    <button mat-button color="primary" (click)="addPokemonInTeam()" *ngIf="isConnected()">Ajouter à l'équipe</button>
+</mat-card>

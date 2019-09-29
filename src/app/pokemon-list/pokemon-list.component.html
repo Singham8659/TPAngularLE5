@@ -1,0 +1,12 @@
+<form>
+  <mat-form-field>
+    <input matInput placeholder="Pokemon" (keyup)="onKeyUp($event.target.value)">
+  </mat-form-field>
+</form>
+<mat-nav-list class="nav-list" infiniteScroll (scrolled)="onScroll()" [scrollWindow]="false">
+    <mat-list-item *ngFor="let pokemon of pokemonList">
+      <img matListAvatar src="../../assets/img/sprites/{{pokemon.id}}.png" alt="{{pokemon.name}}">
+      <h3 matLine (click)="selectPokemon(pokemon.id)">{{pokemon.name}}</h3>
+    </mat-list-item>
+</mat-nav-list>
+
