@@ -17,45 +17,29 @@ export class PokemonService {
 
   constructor(private http: HttpClient) { }
 
+  //renvoie les 20 premiers pokemons
   getPokemons(): Observable<PagedData<Pokemon>>{
     const url = this.apiUrl + "/pokemons?limit=20";
     return this.http.get<PagedData<Pokemon>>(url);
   }
 
+  //renvoie un pokemon selon son id
   getPokemon(id: number): Observable<Pokemon>{
     const url = this.apiUrl + "/pokemons/" + id;
     return this.http.get<Pokemon>(url);
   }
 
+  //renvoie un nombre de donné de pokemon en partant d'une borne dans le pokédex
   getNextPokemons(offset: number, limit: number): Observable<PagedData<Pokemon>>{
     const url = this.apiUrl + "/pokemons?offset="+ offset + "&limit=" + limit;
-    console.log(url);
     return this.http.get<PagedData<Pokemon>>(url);
   }
 
+  //fonction servant à récupérer un pokemon par son nom
   getPokemonByName(searchParam: string): Observable<PagedData<Pokemon>>{
     const url = this.apiUrl + "/pokemons?search=" + searchParam;
     if(searchParam != "")
       return this.http.get<PagedData<Pokemon>>(url);
     return this.getPokemons();
-  }
-
-  logIn(login: string, password: string): Observable<string>{
-    const url = this.apiUrl + "/auth/login";
-    return this.http.post<LoginData>(url, {
-      email: login,
-      password: password
-    })
-    .pipe(
-      map( res => {
-        localStorage.setItem("access_token", res.access_token);
-        localStorage.setItem("refresh_token", res.refresh_token);
-        return 'success';
-      }),
-      catchError((error: any): Observable<any> => {
-          return of('Error');
-        }
-      )
-    )
   }
 }

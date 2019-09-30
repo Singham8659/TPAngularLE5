@@ -22,7 +22,7 @@ export class ConnexionComponent implements OnInit {
     this.pokemonService.logIn(this.login, this.password).subscribe(result => {
       console.log(result);
       if(result == "success"){
-        localStorage.setItem("connected", true),
+        localStorage.setItem("connected", "true"),
         this.router.navigate(["/pokedex"]);
       }
     })

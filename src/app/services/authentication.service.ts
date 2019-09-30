@@ -17,6 +17,7 @@ export class AuthenticationService {
     this.decoder = new JwtHelperService();
   }
 
+  //fonction de connexion. 
   logIn(login: string, password: string): Observable<string>{
     const url = this.apiUrl + "/auth/login";
     return this.http.post<LoginData>(url, {
@@ -36,10 +37,11 @@ export class AuthenticationService {
     )
   }
 
+  //tentative de fonction qui rafraîchit le token.
   refreshToken(): Observable<string> {
     const url = this.apiUrl + "/auth/refresh";
   
-    // append refresh token if you have one
+    
     const refreshToken = localStorage.getItem('refreshToken');
     const expiredToken = localStorage.getItem('token');
   
@@ -51,13 +53,12 @@ export class AuthenticationService {
         observe: 'response'
       })
       .pipe(
-        share(), // <========== YOU HAVE TO SHARE THIS OBSERVABLE TO AVOID MULTIPLE REQUEST BEING SENT SIMULTANEOUSLY
+        share(),
         map(res => {
           const token = res.headers.get('token');
           const newRefreshToken = res.headers.get('refreshToken');
-          // store the new tokens
-          localStorage.setItem('refreshToken', newRefreshToken);
-          localStorage.setItem('token', token);
+          localStorage.setItem('refresh_token', newRefreshToken);
+          localStorage.setItem('access_token', token);
           return token;
        })
     );

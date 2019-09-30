@@ -16,24 +16,27 @@ export class PokemonTeamService {
 
   apiUrl: String = environment.apiUrl;
 
+  //On récupère tous les pokémon un par un en utilisant map et forkjoin
   getPokemons(pokemonIds: number[]): Observable<Pokemon[]> {
     return forkJoin(pokemonIds.map(id => this.pokemonService.getPokemon(id)));
   }
 
+  
   getPokemonTeam(){
     const url = this.apiUrl + "/trainers/me/team";
-
     return this.http.get<number[]>(url).pipe(
       mergeMap(ids => this.getPokemons(ids)),
       defaultIfEmpty([])
     );
   }
 
+  //on renvoie tous les id des pokemon de notre équipe.
   getPokemonTeamIds(): Observable<number[]>{
     const url = this.apiUrl + "/trainers/me/team";
     return this.http.get<number[]>(url);
   }
 
+  //modification de la team avec une requête http.put
   setTeam(pokemonIds: number[]): Observable<any>{
     console.log(pokemonIds);
     const url = this.apiUrl + "/trainers/me/team";
